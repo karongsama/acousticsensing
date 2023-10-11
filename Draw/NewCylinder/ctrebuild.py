@@ -3,16 +3,25 @@ import numpy as np
 from skimage import io
 import plotly.graph_objects as go
 import os
+import cv2
 
 path=r"D:\coding\AcousticSensing\Data\NewCylinder\CTpic\ctpicture_up"
-vol=tif_collection = io.imread(os.path.join(path, '*.tif'))
+vol=io.imread(os.path.join(path, '*.tif'))
+# vol = io.imread("D://coding//AcousticSensing//Data//NewCylinder//CTpic//ctpicture_up.tif")
 volume=vol.T
+volume=volume.T
 r,c=volume[0].shape
-# print(volume.shape)
-frames=375
+# print(vol.shape)
+frames=10
+
+# 显示volume的第一张图片
+# io.imshow(vol[10])
+# io.show()
+# io.imshow(volume[1000])
+# io.show()
 
 fig = go.Figure(frames=[go.Frame(data=go.Surface(
-    z=(37.4 - k * 0.1) * np.ones((r, c)),
+    z=(1.0 - k * 0.1) * np.ones((r, c)),
     surfacecolor=np.flipud(volume[frames - 1 - k]),
     cmin=0, cmax=200
     ),
@@ -23,7 +32,7 @@ fig = go.Figure(frames=[go.Frame(data=go.Surface(
 )
 
 fig.add_trace(go.Surface(
-    z=37.4 * np.ones((r, c)),
+    z=1.0 * np.ones((r, c)),
     surfacecolor=np.flipud(volume[frames-1]),
     colorscale='Gray',
     cmin=0, cmax=200,
@@ -61,7 +70,7 @@ fig.update_layout(
          width=2000,
          height=2000,
          scene=dict(
-                    zaxis=dict(range=[-0.1, 37.5], autorange=False),
+                    zaxis=dict(range=[-0.1, 1.0], autorange=False),
                     aspectratio=dict(x=1, y=1, z=1),
                     ),
          updatemenus = [
